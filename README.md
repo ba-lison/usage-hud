@@ -8,6 +8,7 @@
   <img alt="Claude Code" src="https://img.shields.io/badge/Claude%20Code-mod-d97757?style=for-the-badge&labelColor=151517">
   <img alt="Versão" src="https://img.shields.io/badge/vers%C3%A3o-0.1.0-a3e635?style=for-the-badge&labelColor=151517">
   <img alt="Idioma" src="https://img.shields.io/badge/idioma-PT--BR-e07a5f?style=for-the-badge&labelColor=151517">
+  <img alt="Licença MIT" src="https://img.shields.io/badge/licen%C3%A7a-MIT-a1a1a6?style=for-the-badge&labelColor=151517">
 </p>
 
 <img src="assets/preview.svg" alt="O usage-hud acima do campo de mensagem: Janela 5h em 42%, Contexto em 61% e o botão Gerar handoff" width="880">
@@ -124,6 +125,12 @@ Não. Ele só desenha a faixa acima do campo de mensagem e sai da frente quando 
 
 <br>
 
+## Licença
+
+[MIT](LICENSE) © Alison Cruz
+
+<br>
+
 <div align="center">
-<sub>Feito por <a href="https://github.com/ba-lison">Bali</a></sub>
+<sub>Feito por <a href="https://github.com/ba-lison">Alison Cruz</a></sub>
 </div>

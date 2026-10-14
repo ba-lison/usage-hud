@@ -1,5 +1,5 @@
 {
   "name": "balison-mods",
-  "owner": { "name": "Bali" },
+  "owner": { "name": "Alison Cruz" },
   "plugins": [{ "name": "usage-hud", "source": "./" }]
 }
