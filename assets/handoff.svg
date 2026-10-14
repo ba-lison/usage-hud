@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="300" viewBox="0 0 880 300" font-family="Inter, -apple-system, 'Segoe UI', system-ui, sans-serif">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#121214"/><stop offset="1" stop-color="#0a0a0b"/></linearGradient></defs>
+  <rect x="0.5" y="0.5" width="879" height="299" rx="16" fill="url(#bg)" stroke="#232326"/>
+  <rect x="30.5" y="30.5" width="819" height="239" rx="12" fill="#151517" stroke="#2a2a2d"/>
+  <circle cx="58" cy="64" r="4" fill="#a3e635"><animate attributeName="opacity" values="1;.35;1" dur="2s" repeatCount="indefinite"/></circle>
+  <text x="72" y="64" dominant-baseline="central" font-size="13.5" fill="#a3e635">Handoff pronto · copiado para a área de transferência</text>
+  <g font-size="12.5" font-weight="500">
+    <rect x="602.5" y="50.5" width="70" height="28" rx="8" fill="#1f1f22" stroke="#3a3a3f"/><text x="637.5" y="65" text-anchor="middle" dominant-baseline="central" fill="#e6e6ea">Copiar</text>
+    <rect x="680.5" y="50.5" width="64" height="28" rx="8" fill="#d97757"/><text x="712.5" y="65" text-anchor="middle" dominant-baseline="central" fill="#fff">Abrir</text>
+    <rect x="752.5" y="50.5" width="70" height="28" rx="8" fill="none" stroke="#2f2f33"/><text x="787.5" y="65" text-anchor="middle" dominant-baseline="central" fill="#85858b">Fechar</text>
+  </g>
+  <rect x="54.5" y="96.5" width="771" height="150" rx="8" fill="#0f0f11" stroke="#222225"/>
+  <g font-family="'JetBrains Mono','Cascadia Code',Consolas,Menlo,monospace" font-size="12.5">
+    <text x="74" y="124" fill="#e07a5f">## Objetivo</text>
+    <text x="74" y="144" fill="#a1a1a6">Publicar o painel de uso como plugin instalável para outras pessoas.</text>
+    <text x="74" y="172" fill="#e07a5f">## Próximos passos</text>
+    <text x="74" y="192" fill="#a1a1a6"><tspan fill="#6e6e73">1.</tspan> Testar a instalação numa máquina limpa</text>
+    <text x="74" y="212" fill="#a1a1a6"><tspan fill="#6e6e73">2.</tspan> Coletar o retorno dos primeiros usuários</text>
+    <text x="74" y="234" fill="#55555b">…</text>
+  </g>
+</svg>

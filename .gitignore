@@ -1,0 +1,4 @@
+# Tipos gerados pelo Claude Code ao carregar o mod
+.claude-plugin/types/
+tsconfig.json
+node_modules/

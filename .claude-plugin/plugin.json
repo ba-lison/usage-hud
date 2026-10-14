@@ -1,0 +1,7 @@
+{
+  "name": "usage-hud",
+  "version": "0.1.0",
+  "description": "Band above the prompt: 5-hour window use and reset countdown, context gauge that turns red toward 75% with an alert at 73%, and a handoff button.",
+  "author": { "name": "Bali", "url": "https://github.com/ba-lison" },
+  "types": "./types/index.d.ts"
+}

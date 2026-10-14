@@ -1,0 +1,5 @@
+{
+  "name": "balison-mods",
+  "owner": { "name": "Bali" },
+  "plugins": [{ "name": "usage-hud", "source": "./" }]
+}
