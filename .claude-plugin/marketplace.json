@@ -1,5 +1,13 @@
 {
   "name": "balison-mods",
-  "owner": { "name": "Alison Cruz" },
-  "plugins": [{ "name": "usage-hud", "source": "./" }]
+  "description": "Mods do Claude Code feitos por Alison Cruz: o usage-hud, faixa com o uso da janela de 5h, o contexto e um botão de handoff.",
+  "owner": {
+    "name": "Alison Cruz"
+  },
+  "plugins": [
+    {
+      "name": "usage-hud",
+      "source": "./"
+    }
+  ]
 }

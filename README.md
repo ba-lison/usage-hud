@@ -125,6 +125,33 @@ Não. Ele só desenha a faixa acima do campo de mensagem e sai da frente quando 
 
 <br>
 
+## ✅ Checklist: editar e publicar
+
+Esta pasta é a **única fonte** do mod. O Claude Code lê direto daqui (marketplace de pasta local `balison-mods`), sem cópia no meio.
+
+1. Edite os arquivos aqui mesmo.
+2. `claude plugin validate .` e `claude plugin test .`
+3. Na sessão aberta, rode `/reload-plugins` ou reinicie a sessão. Não precisa subir versão nem reinstalar.
+4. Confira com `claude plugin list`: `usage-hud@balison-mods` deve aparecer com `Read from:` apontando para esta pasta.
+5. Para publicar: suba `version` em `.claude-plugin/plugin.json` (só quando o código muda; mudança só no README não precisa), faça o commit e o `git push`. Quem instalou pelo GitHub atualiza com `claude plugin update usage-hud@balison-mods`.
+6. Confira com `git status` que não sobrou nada fora do commit e que a branch está igual à `origin/main`.
+
+Não copie esta pasta para `~/.claude/skills` nem crie atalho/junction: o mod carregaria duas vezes ou falharia com "Path escapes plugin directory".
+
+### Se o mod sumir ou parar de atualizar
+
+Rode `claude plugin list`. Se `usage-hud@balison-mods` não aparecer, ou se `Read from:` apontar para `plugins/cache` em vez desta pasta, instale de novo a partir da pasta:
+
+```bash
+claude plugin marketplace add "E:\Users\aliso\Documents\.Projetos\usage-hud"
+```
+
+```bash
+claude plugin install usage-hud@balison-mods --scope user
+```
+
+Depois, `/reload-plugins` na sessão aberta.
+
 ## Licença
 
 [MIT](LICENSE) © Alison Cruz
