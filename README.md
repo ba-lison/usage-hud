@@ -6,7 +6,7 @@
 
 <p>
   <img alt="Claude Code" src="https://img.shields.io/badge/Claude%20Code-mod-d97757?style=for-the-badge&labelColor=151517">
-  <img alt="Versão" src="https://img.shields.io/badge/vers%C3%A3o-0.1.0-a3e635?style=for-the-badge&labelColor=151517">
+  <img alt="Versão" src="https://img.shields.io/badge/vers%C3%A3o-0.2.0-a3e635?style=for-the-badge&labelColor=151517">
   <img alt="Idioma" src="https://img.shields.io/badge/idioma-PT--BR-e07a5f?style=for-the-badge&labelColor=151517">
   <img alt="Licença MIT" src="https://img.shields.io/badge/licen%C3%A7a-MIT-a1a1a6?style=for-the-badge&labelColor=151517">
 </p>
@@ -15,7 +15,7 @@
 
 <br>
 
-**Uso da janela de 5h · Contexto da sessão · Handoff em um clique**
+**Rei Clawd · Uso da janela de 5h · Contexto da sessão · Handoff em um clique**
 
 </div>
 
@@ -35,15 +35,15 @@ O **usage-hud** deixa esses números sempre à vista, logo acima de onde você d
   <tr>
     <td width="33%" valign="top">
       <h3>⏱️ Janela de 5h</h3>
-      Quanto do seu limite de 5 horas já foi usado, a hora exata em que ele renova e quanto tempo falta.
+      Quanto do seu limite de 5 horas já foi usado, a hora exata em que ele renova e quanto tempo falta. A barra fica no laranja do Claude até 75% e esquenta até o vermelho em 100%.
     </td>
     <td width="33%" valign="top">
       <h3>🧠 Contexto</h3>
-      Quanto da memória da sessão está ocupado, em porcentagem e em tokens. A cor muda de verde para vermelho conforme chega perto de 75%.
+      Quanto da memória da sessão está ocupado, em porcentagem e em tokens. A barra fica em azul até 75% e esquenta até o vermelho em 100%. Um mini Clawd anda na ponta de cada barra.
     </td>
     <td width="33%" valign="top">
       <h3>📋 Handoff</h3>
-      Um clique gera um resumo completo da sessão, abre num painel e já copia para você colar na próxima conversa.
+      Um clique gera um resumo enxuto da sessão, salva em arquivo, copia e te leva para uma sessão nova já pronta para continuar.
     </td>
   </tr>
 </table>

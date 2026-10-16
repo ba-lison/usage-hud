@@ -1,7 +1,7 @@
 {
   "name": "usage-hud",
-  "version": "0.1.0",
-  "description": "Band above the prompt: 5-hour window use and reset countdown, context gauge that turns red toward 75% with an alert at 73%, and a handoff button.",
+  "version": "0.2.0",
+  "description": "Band above the prompt: the Rei Clawd showing what the session is doing, 5-hour window and context gauges that heat to red past 75%, and a handoff that saves to disk and continues in a fresh session.",
   "author": { "name": "Alison Cruz", "url": "https://github.com/ba-lison" },
   "license": "MIT",
   "types": "./types/index.d.ts"
