@@ -2,11 +2,11 @@
 
 # usage-hud
 
-### Veja o que o Claude está fazendo, quanto ainda cabe na sessão, e leve tudo para uma sessão nova em um clique.
+### Veja o que o Claude está fazendo, quanto ainda cabe na sessão, e recomece com o contexto limpo em um clique.
 
 <p>
   <img alt="Claude Code" src="https://img.shields.io/badge/Claude%20Code-mod-d97757?style=for-the-badge&labelColor=151517">
-  <img alt="Versão" src="https://img.shields.io/badge/vers%C3%A3o-0.2.0-2a78d6?style=for-the-badge&labelColor=151517">
+  <img alt="Versão" src="https://img.shields.io/badge/vers%C3%A3o-0.2.1-2a78d6?style=for-the-badge&labelColor=151517">
   <img alt="Idioma" src="https://img.shields.io/badge/idioma-PT--BR-e07a5f?style=for-the-badge&labelColor=151517">
   <img alt="Licença MIT" src="https://img.shields.io/badge/licen%C3%A7a-MIT-a1a1a6?style=for-the-badge&labelColor=151517">
 </p>
@@ -29,7 +29,7 @@ O **usage-hud** fica logo acima de onde você digita e resolve as três:
 
 - O **Rei Clawd** mostra, pela pose, o que o Claude está fazendo agora.
 - As **barras** mostram quanto da janela de 5 horas e do contexto já foi usado, e esquentam até o vermelho quando está acabando.
-- O **handoff** salva um resumo da sessão em arquivo e abre uma sessão nova já pronta para continuar.
+- O **handoff** salva um resumo da sessão em arquivo, limpa a conversa e deixa tudo pronto para continuar.
 
 <br>
 
@@ -80,7 +80,7 @@ As duas barras mantêm a própria cor até **75%** e só então esquentam até o
 ## 📋 Handoff
 
 <div align="center">
-  <img src="assets/handoff-pronto.svg" alt="O handoff pronto, salvo em .claude/handoff/latest.md, com os botões Copiar, Abrir, Continuar em sessão nova e Fechar, e a oferta de Retomar numa sessão nova" width="880">
+  <img src="assets/handoff-pronto.svg" alt="O handoff pronto, salvo em .claude/handoff/latest.md, com os botões Copiar, Abrir, Limpar e continuar e Fechar, e a oferta de Retomar numa sessão nova" width="880">
 </div>
 
 O botão **Gerar handoff** escreve um resumo da sessão para você continuar numa conversa nova sem perder nada. O formato é enxuto (cerca de 600 tokens), inspirado em micro-handoffs:
@@ -95,9 +95,14 @@ Quando fica pronto:
 1. O handoff é **salvo em `.claude/handoff/latest.md`**, com uma cópia datada ao lado. Nada se perde se a cópia para a área de transferência falhar.
 2. Ele é **copiado** já com a instrução de leitura na frente, então colar basta.
 3. O HUD mostra **quanto custou**, quanto veio do cache e avisa se o cache estava frio.
-4. **Continuar em sessão nova** limpa a conversa (`/clear`) e deixa no campo o pedido para ler o handoff. A sessão nova começa pequena, sem colar o texto inteiro.
+4. **Limpar e continuar** roda `/clear` nesta mesma sessão e deixa no campo o pedido para ler o handoff. A conversa recomeça pequena, sem colar o texto inteiro.
+
+> [!NOTE]
+> O `/clear` zera o contexto, mas mantém a sessão: os mesmos mods, o mesmo modelo e a mesma pasta. Se você reinstalou ou mudou um mod, abra uma sessão nova de verdade (o **+**) e use **Retomar**.
 
 Numa sessão nova, se existe um handoff das últimas 24 horas, o HUD oferece **Retomar**.
+
+Quando o contexto chega a **50%**, o HUD sugere uma vez gerar o handoff, enquanto ele ainda sai pequeno e barato. Se você clicar em **Agora não** ou gerar um handoff, a sugestão não volta mais na sessão.
 
 Acima de 73% de contexto aparece também o botão **Compactar**. Ele resume a sessão no mesmo formato sem sair dela, usando a compactação nativa do Claude Code.
 
@@ -164,7 +169,7 @@ Não precisa. Ela guarda os handoffs da sua máquina. Se preferir mantê-la fora
 </details>
 
 <details>
-<summary><b>O "Continuar em sessão nova" não limpou a conversa.</b></summary>
+<summary><b>O "Limpar e continuar" não limpou a conversa.</b></summary>
 <br>
 Se o Claude Code não deixar o mod rodar o <code>/clear</code>, o HUD avisa e deixa o pedido no campo de mensagem. Rode <code>/clear</code> e envie o texto que ficou lá.
 </details>

@@ -112,3 +112,30 @@ test('the bars keep their own color up to 75% and heat to red at 100%', async ($
   const hot = await cardAt(100)
   expect(hot).toContain('#e5484d')
 })
+
+test('the handoff hint shows once the context reaches 50%, until it is dismissed', async ($, on) => {
+  on('session.measure', () => ({ changed: [] }) as never)
+  const HINT = /bom momento para um handoff/
+  const mountAt = async (pct: number) => {
+    await $.session.measure({
+      context: { tokens: pct * 10_000, window: 1_000_000, percent: pct },
+      rateLimits: [{ kind: 'five_hour', percentUsed: 10 }],
+    } as never)
+    return $.ui.mount({ ...BAND, surface: 'desktop' })
+  }
+
+  const below = await mountAt(49)
+  expect(await below.find({ type: 'Text', text: HINT })).toBeUndefined()
+  await below.unmount()
+
+  const half = await mountAt(50)
+  expect(await half.find({ type: 'Text', text: HINT })).toBeDefined()
+  await half.press({ key: 'Agora não' })
+  expect(await half.find({ type: 'Text', text: HINT })).toBeUndefined()
+  await half.unmount()
+
+  // Dismissed once, it stays hidden for the rest of the session.
+  const later = await mountAt(60)
+  expect(await later.find({ type: 'Text', text: HINT })).toBeUndefined()
+  await later.unmount()
+})

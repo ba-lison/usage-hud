@@ -23,6 +23,7 @@ const TICK_MS = 60_000
 const CELLS = 24
 const LABEL_W = 11
 const PCT_W = 5
+const HINT_AT = 50 // half the context used: suggest a handoff once, while it is still cheap
 const WARN_AT = 73 // the alert shows a little before the bars heat, while there is room to stop
 const FULL_AT = 97 // past this a fork no longer fits: offer compaction instead
 const HANDOFF_TIMEOUT_MS = 180_000
@@ -43,6 +44,7 @@ const usage = atom({ plugin: 'usage-hud', key: 'usage' } as const, NO_USAGE)
 const handoff = atom({ plugin: 'usage-hud', key: 'handoff' } as const, { kind: 'idle' } as HandoffState)
 const resume = atom({ plugin: 'usage-hud', key: 'resume' } as const, null as ResumeOffer)
 const clawd = atom({ plugin: 'usage-hud', key: 'clawd' } as const, { kind: 'parado', at: 0 } as ClawdState)
+const hintDone = atom({ plugin: 'usage-hud', key: 'hintDone' } as const, false)
 
 // The micro-handoff: fixed fields with a cap on each, so the reply stays short and cheap.
 const HANDOFF_PROMPT = [
@@ -449,7 +451,7 @@ async function makeHandoff($: EngineInterface, surface: RenderSurface) {
     const { isCopied } = await $.ui.copy({ text: copyText(text), surface }).catch(() => ({ isCopied: false }))
     $.ui.toast(
       isCopied
-        ? 'Handoff salvo e copiado. Use "Continuar em sessão nova" ou cole numa sessão nova.'
+        ? 'Handoff salvo e copiado. Use "Limpar e continuar" ou cole numa sessão nova.'
         : 'Handoff salvo no painel e em arquivo.',
     )
   } catch (err) {
@@ -463,7 +465,7 @@ async function makeHandoff($: EngineInterface, surface: RenderSurface) {
   }
 }
 
-// Leaves this conversation for a fresh one that starts by reading the saved handoff.
+// Clears this conversation (/clear, same session) and leaves the prompt to read the saved handoff.
 async function continueFresh($: EngineInterface, path: string) {
   try {
     await $.command.run({ command: 'clear' })
@@ -582,6 +584,7 @@ export const register: Register = on => {
     const job = await read($, handoff)
     const offer = await read($, resume)
     const king = await read($, clawd)
+    const isHintDone = await read($, hintDone)
 
     const five = reading.fiveHourPct
     const context = reading.contextPct
@@ -597,7 +600,9 @@ export const register: Register = on => {
         dimColor={Svg ? undefined : isWarning ? undefined : true}
         plain={Svg ? undefined : true}
         onPress={press => {
-          if (!isWorking) void makeHandoff($, press.surface)
+          if (isWorking) return
+          void update($, hintDone, () => true)
+          void makeHandoff($, press.surface)
         }}
       />
     )
@@ -626,15 +631,34 @@ export const register: Register = on => {
           />
           <Button label="Abrir" variant="secondary" onPress={() => void $.ui.open({ id: PANE, title: 'Handoff' })} />
           {job.path !== null && (
-            <Button label="Continuar em sessão nova" variant="primary" onPress={() => void continueFresh($, job.path!)} />
+            <Button label="Limpar e continuar" variant="primary" onPress={() => void continueFresh($, job.path!)} />
           )}
           <Button label="Fechar" role="dismiss" onPress={() => void update($, handoff, () => ({ kind: 'idle' }))} />
         </Box>
       ) : null
 
+    // Once per session, from half the context on: a handoff now is still small and cheap.
+    const hintCard =
+      !isHintDone && offer === null && job.kind === 'idle' && context !== null && context >= HINT_AT ? (
+        <Box flexDirection="row" alignItems="center" justifyContent="flex-end" gap={1}>
+          <Text color={INK.lime}>Contexto em {context}%: bom momento para um handoff</Text>
+          <Box flexDirection="row" gap={1}>
+            <Button
+              label="Gerar handoff"
+              variant="primary"
+              onPress={press => {
+                void update($, hintDone, () => true)
+                void makeHandoff($, press.surface)
+              }}
+            />
+            <Button key="Agora não" label="Agora não" role="dismiss" onPress={() => void update($, hintDone, () => true)} />
+          </Box>
+        </Box>
+      ) : null
+
     const resumeCard =
       offer !== null && job.kind === 'idle' ? (
-        <Box flexDirection="row" alignItems="center" justifyContent="space-between" gap={1}>
+        <Box flexDirection="row" alignItems="center" justifyContent="flex-end" gap={1}>
           <Text color={INK.lime}>Handoff de {clockLabel(offer.savedAt)} disponível</Text>
           <Box flexDirection="row" gap={1}>
             <Button
@@ -683,8 +707,13 @@ export const register: Register = on => {
             </Box>
           </Box>
           {resumeCard && (
-            <Box backgroundColor={CARD_BG} borderStyle="round" borderColor={CARD_BORDER} paddingX={2}>
+            <Box alignSelf="flex-end" backgroundColor={CARD_BG} borderStyle="round" borderColor={CARD_BORDER} paddingX={2}>
               {resumeCard}
+            </Box>
+          )}
+          {hintCard && (
+            <Box alignSelf="flex-end" backgroundColor={CARD_BG} borderStyle="round" borderColor={CARD_BORDER} paddingX={2}>
+              {hintCard}
             </Box>
           )}
           {job.kind === 'ready' && (
@@ -756,6 +785,7 @@ export const register: Register = on => {
           </Box>,
         )}
         {resumeCard}
+        {hintCard}
         {readyActions}
       </Box>
     )
@@ -778,7 +808,7 @@ export const register: Register = on => {
             onPress={press => $.ui.copy({ text: copyText(text), surface: press.surface })}
           />
           {job.path !== null && (
-            <Button label="Continuar em sessão nova" variant="secondary" onPress={() => void continueFresh($, job.path!)} />
+            <Button label="Limpar e continuar" variant="secondary" onPress={() => void continueFresh($, job.path!)} />
           )}
         </Box>
         {job.path !== null && <Text color="subtle">Salvo em {job.path}</Text>}

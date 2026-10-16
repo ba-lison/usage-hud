@@ -1,6 +1,6 @@
 {
   "name": "usage-hud",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Band above the prompt: the Rei Clawd showing what the session is doing, 5-hour window and context gauges that heat to red past 75%, and a handoff that saves to disk and continues in a fresh session.",
   "author": { "name": "Alison Cruz", "url": "https://github.com/ba-lison" },
   "license": "MIT",

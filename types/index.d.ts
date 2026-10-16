@@ -48,6 +48,8 @@ declare module 'claude-code' {
       handoff: HandoffState
       resume: ResumeOffer
       clawd: ClawdState
+      // The handoff hint was answered (generated or dismissed) and stays hidden this session.
+      hintDone: boolean
     }
   }
 }
