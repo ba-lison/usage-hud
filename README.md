@@ -11,7 +11,7 @@
   <img alt="Licença MIT" src="https://img.shields.io/badge/licen%C3%A7a-MIT-a1a1a6?style=for-the-badge&labelColor=151517">
 </p>
 
-<img src="assets/preview.svg" alt="O usage-hud acima do campo de mensagem: o Rei Clawd mudando de pose à esquerda, a Janela 5h em 42%, o Contexto em 61% e o botão Gerar handoff" width="880">
+<img src="assets/hud.svg" alt="O usage-hud acima do campo de mensagem: o Rei Clawd mudando de pose à esquerda, a Janela 5h em 42%, o Contexto em 61% e o botão Gerar handoff" width="880">
 
 <br>
 
@@ -80,7 +80,7 @@ As duas barras mantêm a própria cor até **75%** e só então esquentam até o
 ## 📋 Handoff
 
 <div align="center">
-  <img src="assets/handoff.svg" alt="O handoff pronto, salvo em .claude/handoff/latest.md, com os botões Copiar, Abrir, Continuar em sessão nova e Fechar, e a oferta de Retomar numa sessão nova" width="880">
+  <img src="assets/handoff-pronto.svg" alt="O handoff pronto, salvo em .claude/handoff/latest.md, com os botões Copiar, Abrir, Continuar em sessão nova e Fechar, e a oferta de Retomar numa sessão nova" width="880">
 </div>
 
 O botão **Gerar handoff** escreve um resumo da sessão para você continuar numa conversa nova sem perder nada. O formato é enxuto (cerca de 600 tokens), inspirado em micro-handoffs:
@@ -117,7 +117,7 @@ O handoff também foi feito para não travar:
 No **app desktop** (aba Code), o HUD é um cartão com o Rei Clawd animado e as barras. No **terminal**, ele vira texto: o status do rei numa linha e as duas barras abaixo, com os mesmos botões.
 
 <div align="center">
-  <img src="assets/terminal.svg" alt="O usage-hud no terminal: o status do Rei Clawd e as duas barras em texto" width="880">
+  <img src="assets/terminal-texto.svg" alt="O usage-hud no terminal: o status do Rei Clawd e as duas barras em texto" width="880">
 </div>
 
 <br>

@@ -232,7 +232,7 @@ function terminal() {
   ].join('\n')
 }
 
-const out = { 'assets/preview.svg': preview(), 'assets/poses.svg': poses(), 'assets/barras.svg': bars(), 'assets/handoff.svg': handoff(), 'assets/terminal.svg': terminal() }
+const out = { 'assets/hud.svg': preview(), 'assets/poses.svg': poses(), 'assets/barras.svg': bars(), 'assets/handoff-pronto.svg': handoff(), 'assets/terminal-texto.svg': terminal() }
 for (const [path, svg] of Object.entries(out)) {
   fs.writeFileSync(path, svg + '\n')
   console.log(`${path}  ${(svg.length / 1024).toFixed(1)} KB`)
