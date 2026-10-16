@@ -16,7 +16,17 @@
   para a resposta. Perto do limite, a API recusa ("a API recusou o pedido"). É aqui que ele
   "não consegue criar" o handoff.
 
+- **O travamento sobrevive ao recarregar o mod.** O estado `handoff` fica em `$.state`, e esse valor
+  continua lá depois de um reload. Um `working` preso só sai abrindo uma sessão nova.
+- **Resposta vazia por tentar usar ferramenta.** No fork, toda ferramenta é negada. Se o modelo tenta
+  ler um arquivo para conferir algo antes de escrever, a resposta volta como `empty-reply`
+  ("a resposta veio vazia"). O prompt não diz "não use ferramentas".
+- **O texto só existe na memória da sessão e no clipboard.** Se a cópia falha e a sessão fecha, o handoff se perde.
+
 ## Por que pode gastar mais tokens do que deveria
+- **Dois cliques, dois forks.** A trava contra clique duplo usa o `isWorking` do último desenho.
+  Dois cliques antes de a tela redesenhar disparam dois forks e pagam duas vezes.
+- **Sempre no modelo principal.** O fork usa o modelo da sessão (por exemplo, Opus) e não deixa escolher outro mais barato.
 - **Cache frio.** O fork só sai barato quando o cache da conversa ainda está quente. A doc da API diz
   que o prefixo é "billed afresh once the entry lapsed or after `/model`". Se você clica depois de um
   tempo parado, ou depois de trocar de modelo, paga a conversa inteira de novo, sem cache.
