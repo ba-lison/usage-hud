@@ -13,9 +13,32 @@ export type UsageReading = {
 
 export type HandoffState =
   | { kind: 'idle' }
-  | { kind: 'working' }
-  | { kind: 'ready'; text: string }
+  | { kind: 'working'; startedAt: number }
+  // `path` is where the handoff was saved, null when the write failed; `cost` reads what the fork spent.
+  | { kind: 'ready'; text: string; path: string | null; cost: string }
   | { kind: 'failed'; reason: string }
+
+// A handoff a previous session left on disk, offered when a new session opens.
+export type ResumeOffer = { path: string; savedAt: number } | null
+
+export type ClawdState = {
+  kind:
+    | 'parado'
+    | 'pensando'
+    | 'lendo'
+    | 'editando'
+    | 'terminal'
+    | 'web'
+    | 'orquestrando'
+    | 'trabalhando'
+    | 'esperando'
+    | 'aguardando'
+    | 'compactando'
+    | 'concluido'
+    | 'interrompido'
+    | 'erro'
+  at: number
+}
 
 declare module 'claude-code' {
   interface PluginState {
@@ -23,6 +46,8 @@ declare module 'claude-code' {
       now: number
       usage: UsageReading
       handoff: HandoffState
+      resume: ResumeOffer
+      clawd: ClawdState
     }
   }
 }
