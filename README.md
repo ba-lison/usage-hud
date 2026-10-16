@@ -2,20 +2,20 @@
 
 # usage-hud
 
-### Saiba quanto ainda cabe na sua sessão do Claude Code, sem sair do que você está fazendo.
+### Veja o que o Claude está fazendo, quanto ainda cabe na sessão, e leve tudo para uma sessão nova em um clique.
 
 <p>
   <img alt="Claude Code" src="https://img.shields.io/badge/Claude%20Code-mod-d97757?style=for-the-badge&labelColor=151517">
-  <img alt="Versão" src="https://img.shields.io/badge/vers%C3%A3o-0.2.0-a3e635?style=for-the-badge&labelColor=151517">
+  <img alt="Versão" src="https://img.shields.io/badge/vers%C3%A3o-0.2.0-2a78d6?style=for-the-badge&labelColor=151517">
   <img alt="Idioma" src="https://img.shields.io/badge/idioma-PT--BR-e07a5f?style=for-the-badge&labelColor=151517">
   <img alt="Licença MIT" src="https://img.shields.io/badge/licen%C3%A7a-MIT-a1a1a6?style=for-the-badge&labelColor=151517">
 </p>
 
-<img src="assets/preview.svg" alt="O usage-hud acima do campo de mensagem: Janela 5h em 42%, Contexto em 61% e o botão Gerar handoff" width="880">
+<img src="assets/preview.svg" alt="O usage-hud acima do campo de mensagem: o Rei Clawd mudando de pose à esquerda, a Janela 5h em 42%, o Contexto em 61% e o botão Gerar handoff" width="880">
 
 <br>
 
-**Rei Clawd · Uso da janela de 5h · Contexto da sessão · Handoff em um clique**
+**👑 Rei Clawd · ⏱️ Janela de 5h · 🧠 Contexto · 📋 Handoff**
 
 </div>
 
@@ -23,63 +23,108 @@
 
 ## Por que usar
 
-Você está no meio de uma tarefa longa e, de repente, o contexto acaba ou o limite de uso chega. O que estava na cabeça do Claude se perde, e você precisa explicar tudo de novo.
+Numa tarefa longa, três coisas costumam pegar você de surpresa: o contexto acaba, o limite de uso chega, ou você não sabe se o Claude está trabalhando, pensando ou parado esperando você.
 
-O **usage-hud** deixa esses números sempre à vista, logo acima de onde você digita, e te dá um jeito rápido de levar a sessão inteira para uma conversa nova antes que seja tarde.
+O **usage-hud** fica logo acima de onde você digita e resolve as três:
 
-<br>
-
-## O que você ganha
-
-<table>
-  <tr>
-    <td width="33%" valign="top">
-      <h3>⏱️ Janela de 5h</h3>
-      Quanto do seu limite de 5 horas já foi usado, a hora exata em que ele renova e quanto tempo falta. A barra fica no laranja do Claude até 75% e esquenta até o vermelho em 100%.
-    </td>
-    <td width="33%" valign="top">
-      <h3>🧠 Contexto</h3>
-      Quanto da memória da sessão está ocupado, em porcentagem e em tokens. A barra fica em azul até 75% e esquenta até o vermelho em 100%. Um mini Clawd anda na ponta de cada barra.
-    </td>
-    <td width="33%" valign="top">
-      <h3>📋 Handoff</h3>
-      Um clique gera um resumo enxuto da sessão, salva em arquivo, copia e te leva para uma sessão nova já pronta para continuar.
-    </td>
-  </tr>
-</table>
+- O **Rei Clawd** mostra, pela pose, o que o Claude está fazendo agora.
+- As **barras** mostram quanto da janela de 5 horas e do contexto já foi usado, e esquentam até o vermelho quando está acabando.
+- O **handoff** salva um resumo da sessão em arquivo e abre uma sessão nova já pronta para continuar.
 
 <br>
 
-## Handoff em um clique
+## 👑 Rei Clawd
 
-Quando o contexto passa de 73%, o botão **Gerar handoff** ganha destaque. Ele escreve um documento com tudo que a próxima sessão precisa saber:
-
-- **Objetivo** e **estado atual**
-- **Próximos passos**, na ordem certa
-- **Decisões tomadas** e por quê
-- **Arquivos e comandos** relevantes
-- **Erros e pendências**
-- Um **prompt pronto** para colar na sessão nova
+Um rei em pixel art fica à esquerda do HUD. A pose dele não é decoração: cada uma vem de um evento real da sessão, então ela mostra o que o agente está fazendo de fato.
 
 <div align="center">
-  <img src="assets/handoff.svg" alt="Cartão de handoff pronto, com os botões Copiar, Abrir e Fechar e uma prévia do documento" width="880">
+  <img src="assets/poses.svg" alt="As 14 poses do Rei Clawd, cada uma com o evento do Claude Code que a liga" width="880">
 </div>
 
+| Pose | O que o Claude está fazendo | Evento |
+|---|---|---|
+| Parado | Nada, esperando você escrever | `session.start`, ou fim do turno sem nada rodando |
+| Pensando | Gerando a resposta | `turn.start`, `turn.step` |
+| Lendo | Lendo ou procurando arquivos | `tool.call`: Read, Grep, Glob |
+| Editando | Mexendo em código ou arquivos | `tool.call`: Edit, Write, NotebookEdit |
+| No terminal | Rodando comandos | `tool.call`: Bash, PowerShell |
+| Na web | Pesquisando ou abrindo páginas | `tool.call`: WebSearch, WebFetch, navegador |
+| Orquestrando | Lançou subagents e coordena dentro da resposta | `tool.call`: Agent |
+| Trabalhando | Usando qualquer outra ferramenta (MCP, skills…) | `tool.call` |
+| Esperando você | Fez uma pergunta ou mostrou um plano | `tool.call`: AskUserQuestion, ExitPlanMode |
+| Aguardando | Já respondeu, mas há tarefas rodando em segundo plano | `turn.complete` com agentes ainda `running` |
+| Compactando | Resumindo a conversa | `session.compact` |
+| Concluído | Terminou a resposta | `turn.complete`, `reason: 'answer'` |
+| Interrompido | Você apertou Esc | `turn.complete`, `reason: 'aborted'` |
+| Erro | Erro da API ou recusa | `turn.complete`, `reason: 'error'` ou `'refusal'` |
+
+Concluído, Interrompido e Erro duram 5 segundos e depois ele volta para Parado, ou para Aguardando se ainda houver algo rodando. Só a sessão principal muda a pose: o que os subagents fazem por dentro não interfere.
+
+O desenho do rei veio do mod [tripulação](https://github.com/ba-lison/tripulacao), mas o usage-hud não depende dele: o pixel art está copiado em `hooks/clawd.ts`.
+
 <br>
 
-## Funciona no app e no terminal
-
-No **app desktop** (aba Code), o HUD aparece como um cartão com barras animadas. No **terminal**, ele se adapta em duas linhas de texto, com as mesmas informações e o mesmo botão.
+## ⏱️ Janela de 5h e 🧠 Contexto
 
 <div align="center">
-  <img src="assets/terminal.svg" alt="O usage-hud no terminal, em duas linhas de texto" width="880">
+  <img src="assets/barras.svg" alt="As barras em 30, 75, 90 e 100%: a Janela 5h em laranja e o Contexto em azul, as duas esquentando até o vermelho" width="880">
+</div>
+
+- **Janela 5h**, no laranja do Claude: quanto do limite de 5 horas já foi usado, a hora em que ele renova e quanto tempo falta.
+- **Contexto**, em azul: quanto da memória da sessão está ocupado, em porcentagem e em tokens, e quanto ainda cabe.
+
+As duas barras mantêm a própria cor até **75%** e só então esquentam até o vermelho em **100%**. Assim você distingue uma da outra pela cor, e o vermelho só aparece quando importa. Um **mini Clawd** anda na ponta de cada barra, com a cor daquele ponto.
+
+<br>
+
+## 📋 Handoff
+
+<div align="center">
+  <img src="assets/handoff.svg" alt="O handoff pronto, salvo em .claude/handoff/latest.md, com os botões Copiar, Abrir, Continuar em sessão nova e Fechar, e a oferta de Retomar numa sessão nova" width="880">
+</div>
+
+O botão **Gerar handoff** escreve um resumo da sessão para você continuar numa conversa nova sem perder nada. O formato é enxuto (cerca de 600 tokens), inspirado em micro-handoffs:
+
+- **Objetivo** e **estado**, com a branch e o último commit
+- Até 5 **decisões**, com o motivo e o que foi descartado
+- Até 10 **arquivos**, cada um com uma linha
+- **Bloqueios e pendências**, **preferências** e o **próximo passo**
+
+Quando fica pronto:
+
+1. O handoff é **salvo em `.claude/handoff/latest.md`**, com uma cópia datada ao lado. Nada se perde se a cópia para a área de transferência falhar.
+2. Ele é **copiado** já com a instrução de leitura na frente, então colar basta.
+3. O HUD mostra **quanto custou**, quanto veio do cache e avisa se o cache estava frio.
+4. **Continuar em sessão nova** limpa a conversa (`/clear`) e deixa no campo o pedido para ler o handoff. A sessão nova começa pequena, sem colar o texto inteiro.
+
+Numa sessão nova, se existe um handoff das últimas 24 horas, o HUD oferece **Retomar**.
+
+Acima de 73% de contexto aparece também o botão **Compactar**. Ele resume a sessão no mesmo formato sem sair dela, usando a compactação nativa do Claude Code.
+
+> [!TIP]
+> O handoff sai mais barato com o cache quente. Gere logo depois de uma resposta, e não depois de muito tempo parado ou de trocar de modelo: nesses casos o Claude paga a conversa inteira de novo.
+
+O handoff também foi feito para não travar:
+
+- Se algo der errado, ou se demorar mais de 3 minutos, o botão volta sozinho e diz o motivo.
+- Clicar duas vezes não gera dois handoffs.
+- Se o contexto passou de 97% e o handoff não cabe mais, o HUD indica **Compactar** no lugar.
+
+<br>
+
+## 💻 Funciona no app e no terminal
+
+No **app desktop** (aba Code), o HUD é um cartão com o Rei Clawd animado e as barras. No **terminal**, ele vira texto: o status do rei numa linha e as duas barras abaixo, com os mesmos botões.
+
+<div align="center">
+  <img src="assets/terminal.svg" alt="O usage-hud no terminal: o status do Rei Clawd e as duas barras em texto" width="880">
 </div>
 
 <br>
 
 ## Instalação
 
-Leva menos de um minuto. Abra o Claude Code **no terminal** (`claude`) e digite:
+Abra o Claude Code **no terminal** (`claude`) e digite:
 
 ```
 /plugin install usage-hud --marketplace ba-lison/usage-hud
@@ -87,8 +132,7 @@ Leva menos de um minuto. Abra o Claude Code **no terminal** (`claude`) e digite:
 
 1. Responda **`y`** para adicionar o marketplace.
 2. Dê **Enter** no escopo **user**, para valer em todas as sessões.
-
-Pronto: o HUD aparece na hora e carrega sozinho daqui em diante, inclusive na aba Code do app desktop.
+3. **Abra uma sessão nova.** Um mod instalado no meio da sessão só aparece na próxima.
 
 > [!NOTE]
 > O comando `/plugin install` só funciona no terminal. Na aba Code do app ele não está disponível, mas o HUD instalado pelo terminal aparece lá normalmente.
@@ -101,6 +145,8 @@ Pronto: o HUD aparece na hora e carrega sozinho daqui em diante, inclusive na ab
 /plugin marketplace update balison-mods
 ```
 
+Depois, abra uma sessão nova.
+
 <br>
 
 ## Perguntas frequentes
@@ -112,45 +158,91 @@ O uso da janela só é informado depois que o Claude responde pela primeira vez 
 </details>
 
 <details>
-<summary><b>O handoff pode ser em outro idioma?</b></summary>
+<summary><b>Devo commitar a pasta <code>.claude/handoff/</code>?</b></summary>
 <br>
-Sim. O pedido do handoff fica em <code>HANDOFF_PROMPT</code>, no arquivo <code>hooks/register.tsx</code>. Troque o texto pelo idioma e pelas seções que preferir.
+Não precisa. Ela guarda os handoffs da sua máquina. Se preferir mantê-la fora do git, adicione <code>.claude/handoff/</code> ao <code>.gitignore</code> do projeto.
 </details>
 
 <details>
-<summary><b>O HUD atrapalha alguma coisa?</b></summary>
+<summary><b>O "Continuar em sessão nova" não limpou a conversa.</b></summary>
 <br>
-Não. Ele só desenha a faixa acima do campo de mensagem e sai da frente quando o Claude Code precisa desse espaço para outra coisa, como uma pesquisa de satisfação.
+Se o Claude Code não deixar o mod rodar o <code>/clear</code>, o HUD avisa e deixa o pedido no campo de mensagem. Rode <code>/clear</code> e envie o texto que ficou lá.
+</details>
+
+<details>
+<summary><b>O handoff pode ser em outro idioma ou ter outras seções?</b></summary>
+<br>
+Sim. O pedido fica em <code>HANDOFF_PROMPT</code>, no arquivo <code>hooks/register.tsx</code>. Troque o texto pelo idioma e pelas seções que preferir.
+</details>
+
+<details>
+<summary><b>O Rei Clawd atrapalha o Claude?</b></summary>
+<br>
+Não. Ele só observa os eventos da sessão e nunca bloqueia uma ferramenta ou um turno: se algo falhar no desenho dele, o Claude segue normalmente. O HUD inteiro também sai da frente quando o Claude Code precisa do espaço, como numa pesquisa de satisfação.
 </details>
 
 <br>
 
-## ✅ Checklist: editar e publicar
+## Para desenvolver
 
-Esta pasta é a **única fonte** do mod. O Claude Code lê direto daqui (marketplace de pasta local `balison-mods`), sem cópia no meio.
+| Arquivo | O que tem |
+|---|---|
+| `hooks/register.tsx` | Os hooks: barras, estado do Rei Clawd e handoff |
+| `hooks/clawd.ts` | O pixel art do rei, as 14 poses, o mini Clawd e as cores das barras |
+| `types/index.d.ts` | O contrato do estado que o HUD guarda na sessão |
+| `tests/band.test.ts` | Testes do HUD, das poses e das cores |
+| `docs/gerar-imagens.mjs` | Gera as imagens deste README a partir de `hooks/clawd.ts` |
+| `docs/prototipo/` | O protótipo visual, as decisões de design e o diagnóstico do handoff |
 
-1. Edite os arquivos aqui mesmo.
-2. `claude plugin validate .` e `claude plugin test .`
-3. Na sessão aberta, rode `/reload-plugins` ou reinicie a sessão. Não precisa subir versão nem reinstalar.
-4. Confira com `claude plugin list`: `usage-hud@balison-mods` deve aparecer com `Read from:` apontando para esta pasta.
-5. Para publicar: suba `version` em `.claude-plugin/plugin.json` (só quando o código muda; mudança só no README não precisa), faça o commit e o `git push`. Quem instalou pelo GitHub atualiza com `claude plugin update usage-hud@balison-mods`.
-6. Confira com `git status` que não sobrou nada fora do commit e que a branch está igual à `origin/main`.
+### ✅ Checklist: editar, testar e publicar
 
-Não copie esta pasta para `~/.claude/skills` nem crie atalho/junction: o mod carregaria duas vezes ou falharia com "Path escapes plugin directory".
+Toda mudança é testada localmente antes de ir para o GitHub.
 
-### Se o mod sumir ou parar de atualizar
+1. Edite os arquivos nesta pasta.
+2. Valide e teste:
 
-Rode `claude plugin list`. Se `usage-hud@balison-mods` não aparecer, ou se `Read from:` apontar para `plugins/cache` em vez desta pasta, instale de novo a partir da pasta:
+   ```bash
+   claude plugin validate .
+   ```
 
-```bash
-claude plugin marketplace add "E:\Users\aliso\Documents\.Projetos\usage-hud"
-```
+   ```bash
+   claude plugin test .
+   ```
 
-```bash
-claude plugin install usage-hud@balison-mods --scope user
-```
+3. Se mudou o visual, gere as imagens do README de novo:
 
-Depois, `/reload-plugins` na sessão aberta.
+   ```bash
+   node docs/gerar-imagens.mjs
+   ```
+
+4. Instale a partir desta pasta para testar de verdade:
+
+   ```bash
+   claude plugin marketplace remove balison-mods
+   ```
+
+   ```bash
+   claude plugin install usage-hud --marketplace "E:\Users\aliso\Documents\.Projetos\usage-hud" -y
+   ```
+
+   Abra uma sessão nova e confira.
+
+5. Funcionou? Suba `version` em `.claude-plugin/plugin.json` (só quando o código muda), faça o commit e o `git push`.
+6. Volte a instalar pelo GitHub:
+
+   ```bash
+   claude plugin marketplace remove balison-mods
+   ```
+
+   ```bash
+   claude plugin install usage-hud --marketplace ba-lison/usage-hud -y
+   ```
+
+7. Confira com `git status` que não sobrou nada fora do commit e que a branch está igual à `origin/main`.
+
+Não copie esta pasta para `~/.claude/skills` nem crie atalho ou junction: o mod carregaria duas vezes ou falharia com "Path escapes plugin directory".
+
+<br>
 
 ## Licença
 

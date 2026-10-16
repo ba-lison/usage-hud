@@ -1,23 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="880" height="150" viewBox="0 0 880 150" font-family="'JetBrains Mono','Cascadia Code',Consolas,Menlo,monospace" font-size="14">
-  <rect x="0.5" y="0.5" width="879" height="149" rx="14" fill="#0c0c0d" stroke="#232326"/>
-  <circle cx="24" cy="22" r="5" fill="#3a3a3f"/><circle cx="40" cy="22" r="5" fill="#3a3a3f"/><circle cx="56" cy="22" r="5" fill="#3a3a3f"/>
-  <text x="440" y="26" text-anchor="middle" font-size="11.5" fill="#4d4d52">terminal</text>
-
-  <!-- Janela 5h -->
-  <text x="32" y="74" fill="#8a8a90">Janela 5h</text>
-  <rect x="130" y="68" width="200" height="1" fill="#3a3a3f"/>
-  <rect x="130" y="67" width="84" height="3" fill="#e6e6ea"/>
-  <text x="382" y="74" text-anchor="end" fill="#e6e6ea">42%</text>
-  <text x="400" y="74" fill="#8a8a90">2h 15min · 19:40</text>
-
-  <!-- Contexto -->
-  <text x="32" y="102" fill="#8a8a90">Contexto</text>
-  <rect x="130" y="96" width="200" height="1" fill="#3a3a3f"/>
-  <rect x="130" y="95" width="122" height="3" fill="#e36c46"/>
-  <text x="382" y="102" text-anchor="end" fill="#e36c46">61%</text>
-  <text x="400" y="102" fill="#8a8a90">122k / 200k</text>
-  <text x="720" y="102" fill="#e6e6ea">Gerar handoff</text>
-
-  <text x="32" y="130" fill="#4d4d52">&gt;</text>
-  <rect x="48" y="118" width="8" height="15" fill="#a3e635"><animate attributeName="opacity" values="1;1;0;0" keyTimes="0;.5;.5;1" dur="1.1s" repeatCount="indefinite"/></rect>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="170" viewBox="0 0 880 170" font-family="'JetBrains Mono','Cascadia Code',Consolas,Menlo,monospace" font-size="14">
+<title>O usage-hud no terminal: o status do Rei Clawd e as duas barras em texto</title>
+<rect x=".5" y=".5" width="879" height="169" rx="14" fill="#0c0c0d" stroke="#232326"/>
+<circle cx="24" cy="22" r="5" fill="#3a3a3f"/><circle cx="40" cy="22" r="5" fill="#3a3a3f"/><circle cx="56" cy="22" r="5" fill="#3a3a3f"/><text x="440" y="26" text-anchor="middle" font-size="11.5" fill="#4d4d52">terminal</text><text x="32" y="64" fill="#d97757">♛ Rei Clawd · editando</text><text x="32" y="92" fill="#8a8a90">Janela 5h</text><text x="130" y="92"><tspan fill="#d97757">━━━━━━━━━━</tspan><tspan fill="#3a3a3f">──────────────</tspan></text><text x="392" y="92" text-anchor="end" fill="#d97757">42%</text><text x="410" y="92" fill="#8a8a90">renova às 19:40 · faltam 2h 15min</text><text x="32" y="118" fill="#8a8a90">Contexto</text><text x="130" y="118"><tspan fill="#2a78d6">━━━━━━━━━━━━━━━</tspan><tspan fill="#3a3a3f">─────────</tspan></text><text x="392" y="118" text-anchor="end" fill="#2a78d6">61%</text><text x="410" y="118" fill="#8a8a90">610k de 1.0M · faltam 390k</text><text x="740" y="118" fill="#e6e6ea">Gerar handoff</text><text x="32" y="148" fill="#4d4d52">&gt;</text><rect x="48" y="136" width="8" height="15" fill="#a3e635"><animate attributeName="opacity" values="1;1;0;0" keyTimes="0;.5;.5;1" dur="1.1s" repeatCount="indefinite"/></rect>
 </svg>
